@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ProjectDAO {
 
-    public void save(Project projeto) {
+    public void create(Project projeto) {
         String sql = "INSERT INTO projects (name, description, start_date, end_date, status, budget) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnector.getConnection();
