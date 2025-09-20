@@ -11,7 +11,7 @@ public class MemberDAO {
     public void create(Member member) {
       String sql = "INSERT INTO members (name, email, position, department, date_joined) VALUES (?, ?, ?, ?, ?)";
 
-      try (Connection conn = DatabaseConnector.getConnection();
+        try (Connection conn = DatabaseConnector.getConnection();
           PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
           pstmt.setString(1, member.getName());
@@ -23,16 +23,16 @@ public class MemberDAO {
           pstmt.executeUpdate();
           System.out.println("Membro salvo com sucesso!");
 
-      } catch (SQLException e) {
+        }catch (SQLException e) {
           System.err.println("Erro ao salvar o membro: " + e.getMessage());
           e.printStackTrace();
-      }
-  }
+        }
+    }
 
-  public Member findById(int id) {
+    public Member findById(int id) {
       String sql = "SELECT * FROM members WHERE id_member = ?";
       Member member = null;
-      try (Connection conn = DatabaseConnector.getConnection();
+        try (Connection conn = DatabaseConnector.getConnection();
           PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
           pstmt.setInt(1, id);
@@ -48,17 +48,17 @@ public class MemberDAO {
             member.setDateJoined(rs.getDate("date_joined").toLocalDate());
           }
 
-      } catch (SQLException e) {
+        }catch (SQLException e) {
           System.err.println("Erro ao buscar o membro: " + e.getMessage());
           e.printStackTrace();
-      }
-      return member;
-  }
+        }
+        return member;
+    }
 
-  public List<Member> listAll() {
+    public List<Member> listAll() {
       String sql = "SELECT * FROM members";
       List<Member> members = new ArrayList<>();
-      try (Connection conn = DatabaseConnector.getConnection();
+        try (Connection conn = DatabaseConnector.getConnection();
           Statement stmt = conn.createStatement();
           ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -72,17 +72,17 @@ public class MemberDAO {
             member.setDateJoined(rs.getDate("date_joined").toLocalDate());
             members.add(member); // Adiciona o membro à lista
           }
-      } catch (SQLException e) {
+        } catch (SQLException e) {
           System.err.println("Erro ao listar os membros: " + e.getMessage());
           e.printStackTrace();
-      }
-      return members;
-  }
+        }
+        return members;
+    }
 
-  public void update(Member member) {
+    public void update(Member member) {
       String sql = "UPDATE members SET name = ?, email = ?, position = ?, department = ?, date_joined = ? WHERE id_member = ?";
 
-      try (Connection conn = DatabaseConnector.getConnection();
+        try (Connection conn = DatabaseConnector.getConnection();
           PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
           pstmt.setString(1, member.getName());
@@ -94,25 +94,25 @@ public class MemberDAO {
           pstmt.executeUpdate();
           System.out.println("Membro atualizado com sucesso!");
 
-      } catch (SQLException e) {
+        } catch (SQLException e) {
           System.err.println("Erro ao atualizar o membro: " + e.getMessage());
           e.printStackTrace();
-      }
-  }
+        }
+    }
 
-  public void delete(int id) {
+    public void delete(int id) {
       String sql = "DELETE FROM members WHERE id_member = ?";
 
-      try (Connection conn = DatabaseConnector.getConnection();
+        try (Connection conn = DatabaseConnector.getConnection();
           PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
           pstmt.setInt(1, id);
           pstmt.executeUpdate();
           System.out.println("Membro deletado com sucesso!");
 
-      } catch (SQLException e) {
+        } catch (SQLException e) {
           System.err.println("Erro ao deletar o membro: " + e.getMessage());
           e.printStackTrace();
-      }
-  }
+        }
+    }
 }
