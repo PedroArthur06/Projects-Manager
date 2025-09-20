@@ -28,7 +28,6 @@ A camada de serviço (`ManagerService.java`) implementa as seguintes regras de n
 
 O banco de dados é composto por 4 tabelas principais para gerenciar as entidades do sistema. O relacionamento entre `projects` e `members` é do tipo muitos-para-muitos, sendo controlado pela tabela associativa `project_members`.
 
-![Diagrama ER](image_017cf0.png)
 
 ## Como Executar o Projeto
 
@@ -41,7 +40,7 @@ Siga os passos abaixo para configurar e executar o projeto em seu ambiente local
 
 **1. Clone o Repositório**
 ```bash
-git clone [https://seu-link-para-o-repositorio.git](https://seu-link-para-o-repositorio.git)
+git clone [[https://seu-link-para-o-repositorio.git](https://seu-link-para-o-repositorio.git)](https://github.com/PedroArthur06/Projects-Manager/tree/main)
 cd projectsmanager
 ```
 
@@ -70,4 +69,4 @@ cd projectsmanager
 
 ## Autor
 
-**Pedro Art** - [Seu LinkedIn ou GitHub aqui]
+**Pedro Arthur** - www.linkedin.com/in/pedro-arthur-rod
