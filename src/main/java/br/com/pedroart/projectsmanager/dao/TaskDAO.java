@@ -23,10 +23,10 @@ public class TaskDAO {
             pstmt.setInt(7, task.getIdProject());
 
             pstmt.executeUpdate();
-            System.out.println("Tarefa salva com sucesso!");
+            System.out.println("Task saved successfully!");
 
         } catch (SQLException e) {
-            System.err.println("Erro ao salvar a tarefa: " + e.getMessage());
+            System.err.println("Error saving task: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -54,7 +54,7 @@ public class TaskDAO {
             }
 
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar a tarefa: " + e.getMessage());
+            System.err.println("Error fetching task: " + e.getMessage());
             e.printStackTrace();
         }
         return task;
@@ -81,7 +81,7 @@ public class TaskDAO {
                 tasks.add(task);
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao listar as tarefas: " + e.getMessage());
+            System.err.println("Error listing tasks: " + e.getMessage());
             e.printStackTrace();
         }
         return tasks;
@@ -103,10 +103,10 @@ public class TaskDAO {
             pstmt.setInt(8, task.getIdTask());
 
             pstmt.executeUpdate();
-            System.out.println("Tarefa atualizada com sucesso!");
+            System.out.println("Task updated successfully!");
 
         } catch (SQLException e) {
-            System.err.println("Erro ao atualizar a tarefa: " + e.getMessage());
+            System.err.println("Error updating task: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -119,10 +119,10 @@ public class TaskDAO {
 
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
-            System.out.println("Tarefa deletada com sucesso!");
+            System.out.println("Task deleted successfully!");
 
         } catch (SQLException e) {
-            System.err.println("Erro ao deletar a tarefa: " + e.getMessage());
+            System.err.println("Error deleting task: " + e.getMessage());
             e.printStackTrace();
         }
     }
