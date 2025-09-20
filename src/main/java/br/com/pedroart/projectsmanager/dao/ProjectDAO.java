@@ -57,7 +57,21 @@ public class ProjectDAO {
             e.printStackTrace();
         }
     }
-    public List<Project> listarTodos() { /* ... código SQL para SELECT ALL ... */ return new ArrayList<>(); }
+    public List<Project> list() { /* ... código SQL para SELECT ALL ... */ return new ArrayList<>(); }
     public void update(Project projeto) { /* ... código SQL para UPDATE ... */ }
-    public void delete(int id) { /* ... código SQL para DELETE ... */ }
+    public void delete(int id) {
+        String sql = "DELETE FROM projects WHERE id = ?";
+
+        try (Connection conn = DatabaseConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            System.out.println("Projeto deletado com sucesso!");
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao deletar o projeto: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
