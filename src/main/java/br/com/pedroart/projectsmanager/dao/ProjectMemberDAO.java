@@ -1,7 +1,6 @@
 package br.com.pedroart.projectsmanager.dao;
 
 import br.com.pedroart.projectsmanager.model.Member;
-import br.com.pedroart.projectsmanager.model.Project;
 import br.com.pedroart.projectsmanager.utils.DatabaseConnector;
 
 import java.sql.Connection;
