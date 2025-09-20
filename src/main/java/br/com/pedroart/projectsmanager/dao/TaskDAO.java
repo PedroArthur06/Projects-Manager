@@ -126,4 +126,35 @@ public class TaskDAO {
             e.printStackTrace();
         }
     }
+
+    public List<Task> findTasksByProjectAndStatus(int projectId, String status) {
+        String sql = "SELECT * FROM tasks WHERE id_project = ? AND status = ?";
+        List<Task> tasks = new ArrayList<>();
+    
+        try (Connection conn = DatabaseConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    
+            pstmt.setInt(1, projectId);
+            pstmt.setString(2, status);
+            ResultSet rs = pstmt.executeQuery();
+    
+            while (rs.next()) {
+                Task task = new Task();
+                task.setIdTask(rs.getInt("id_task"));
+                task.setTitle(rs.getString("title"));
+                task.setDescription(rs.getString("description"));
+                task.setStartDate(rs.getDate("start_date").toLocalDate());
+                task.setEndDate(rs.getDate("end_date").toLocalDate());
+                task.setPriority(rs.getInt("priority"));
+                task.setStatus(rs.getString("status"));
+                task.setIdProject(rs.getInt("id_project"));
+                tasks.add(task);
+            }
+    
+        } catch (SQLException e) {
+            System.err.println("Error searching for tasks by project and status: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return tasks;
+    }
 }
