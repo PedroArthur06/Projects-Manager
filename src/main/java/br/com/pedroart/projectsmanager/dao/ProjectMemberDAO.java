@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import br.com.pedroart.projectsmanager.exception.DataAccessException;
 
 public class ProjectMemberDAO {
 
@@ -25,8 +26,7 @@ public class ProjectMemberDAO {
             System.out.println("Membro " + memberId + " associado ao projeto " + projectId + " com sucesso!");
 
         } catch (SQLException e) {
-            System.err.println("Erro ao associar membro ao projeto: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Erro ao associar membro ao projeto: " + e.getMessage());
         }
     }
 
@@ -43,8 +43,7 @@ public class ProjectMemberDAO {
             System.out.println("Membro " + memberId + " removido do projeto " + projectId + " com sucesso!");
 
         } catch (SQLException e) {
-            System.err.println("Erro ao remover membro do projeto: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Erro ao remover membro do projeto: " + e.getMessage());
         }
     }
 
@@ -73,8 +72,7 @@ public class ProjectMemberDAO {
             }
 
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar membros do projeto: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Erro ao buscar membros do projeto: " + e.getMessage());
         }
         return members;
     }

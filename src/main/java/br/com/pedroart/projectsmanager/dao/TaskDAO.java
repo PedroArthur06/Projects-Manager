@@ -5,6 +5,7 @@ import br.com.pedroart.projectsmanager.utils.DatabaseConnector;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import br.com.pedroart.projectsmanager.exception.DataAccessException;
 
 public class TaskDAO {
 
@@ -26,8 +27,7 @@ public class TaskDAO {
             System.out.println("Task saved successfully!");
 
         } catch (SQLException e) {
-            System.err.println("Error saving task: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Error saving task: " + e.getMessage());
         }
     }
 
@@ -54,8 +54,7 @@ public class TaskDAO {
             }
 
         } catch (SQLException e) {
-            System.err.println("Error fetching task: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Error fetching task: " + e.getMessage());
         }
         return task;
     }
@@ -81,8 +80,7 @@ public class TaskDAO {
                 tasks.add(task);
             }
         } catch (SQLException e) {
-            System.err.println("Error listing tasks: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Error listing tasks: " + e.getMessage());
         }
         return tasks;
     }
@@ -106,8 +104,7 @@ public class TaskDAO {
             System.out.println("Task updated successfully!");
 
         } catch (SQLException e) {
-            System.err.println("Error updating task: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Error updating task: " + e.getMessage());
         }
     }
 
@@ -122,8 +119,7 @@ public class TaskDAO {
             System.out.println("Task deleted successfully!");
 
         } catch (SQLException e) {
-            System.err.println("Error deleting task: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Error deleting task: " + e.getMessage());
         }
     }
 
@@ -152,8 +148,7 @@ public class TaskDAO {
             }
     
         } catch (SQLException e) {
-            System.err.println("Error searching for tasks by project and status: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Error searching for tasks by project and status: " + e.getMessage());
         }
         return tasks;
     }

@@ -5,6 +5,7 @@ import br.com.pedroart.projectsmanager.utils.DatabaseConnector;
 import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
+import br.com.pedroart.projectsmanager.exception.DataAccessException;
 
 public class ProjectDAO {
 
@@ -25,8 +26,7 @@ public class ProjectDAO {
             System.out.println("Projeto salvo com sucesso no banco de dados!");
 
         } catch (SQLException e) {
-            System.err.println("Erro ao salvar o projeto: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Erro ao salvar o projeto: " + e.getMessage());
         }
     }
     
@@ -51,8 +51,7 @@ public class ProjectDAO {
             }
 
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar o projeto: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Erro ao buscar o projeto: " + e.getMessage());
         }
         return project;
     }
@@ -76,8 +75,7 @@ public class ProjectDAO {
                 projects.add(project);
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao listar os projetos: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Erro ao listar os projetos: " + e.getMessage());
         }
         return projects;
     }
@@ -100,8 +98,7 @@ public class ProjectDAO {
             System.out.println("Projeto atualizado com sucesso!");
 
         } catch (SQLException e) {
-            System.err.println("Erro ao atualizar o projeto: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Erro ao atualizar o projeto: " + e.getMessage());
         }
     }
 
@@ -116,8 +113,7 @@ public class ProjectDAO {
             System.out.println("Projeto deletado com sucesso!");
 
         } catch (SQLException e) {
-            System.err.println("Erro ao deletar o projeto: " + e.getMessage());
-            e.printStackTrace();
+            throw new DataAccessException("Erro ao deletar o projeto: " + e.getMessage());
         }
     }
 }

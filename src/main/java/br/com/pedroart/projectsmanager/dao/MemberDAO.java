@@ -5,6 +5,7 @@ import br.com.pedroart.projectsmanager.utils.DatabaseConnector;
 import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
+import br.com.pedroart.projectsmanager.exception.DataAccessException;
 
 public class MemberDAO {
 
@@ -24,8 +25,8 @@ public class MemberDAO {
           System.out.println("Membro salvo com sucesso!");
 
         }catch (SQLException e) {
-          System.err.println("Erro ao salvar o membro: " + e.getMessage());
-          e.printStackTrace();
+          throw new DataAccessException("Erro ao salvar o membro: " + e.getMessage());
+          
         }
     }
 
@@ -49,8 +50,7 @@ public class MemberDAO {
           }
 
         }catch (SQLException e) {
-          System.err.println("Erro ao buscar o membro: " + e.getMessage());
-          e.printStackTrace();
+          throw new DataAccessException("Erro ao buscar o membro: " + e.getMessage());
         }
         return member;
     }
@@ -73,8 +73,7 @@ public class MemberDAO {
             members.add(member); // Adiciona o membro à lista
           }
         } catch (SQLException e) {
-          System.err.println("Erro ao listar os membros: " + e.getMessage());
-          e.printStackTrace();
+          throw new DataAccessException("Erro ao listar os membros: " + e.getMessage());
         }
         return members;
     }
@@ -111,8 +110,7 @@ public class MemberDAO {
           System.out.println("Membro deletado com sucesso!");
 
         } catch (SQLException e) {
-          System.err.println("Erro ao deletar o membro: " + e.getMessage());
-          e.printStackTrace();
+          throw new DataAccessException("Erro ao deletar o membro: " + e.getMessage());
         }
     }
 }
