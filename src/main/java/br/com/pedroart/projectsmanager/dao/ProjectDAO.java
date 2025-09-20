@@ -1,5 +1,4 @@
-package  br.com.pedroart.projectsmanager.dao;
-
+package br.com.pedroart.projectsmanager.dao;
 
 import br.com.pedroart.projectsmanager.model.Project;
 import br.com.pedroart.projectsmanager.utils.DatabaseConnector;
@@ -8,6 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class ProjectDAO {
+
     public void save(Project projeto) {
         String sql = "INSERT INTO projects (name, description, start_date, end_date, status, budget) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -21,9 +21,7 @@ public class ProjectDAO {
             pstmt.setString(5, projeto.getStatus());
             pstmt.setDouble(6, projeto.getBudget());
 
-            // Executa o comando SQL
             pstmt.executeUpdate();
-            
             System.out.println("Projeto salvo com sucesso no banco de dados!");
 
         } catch (SQLException e) {
@@ -32,8 +30,8 @@ public class ProjectDAO {
         }
     }
     
-    public Project findByID(int id) {
-        String sql = "SELECT * FROM projects WHERE id = ?";
+    public Project findById(int id) {
+        String sql = "SELECT * FROM projects WHERE id_project = ?"; 
         Project project = null;
         try (Connection conn = DatabaseConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -43,7 +41,7 @@ public class ProjectDAO {
 
             if (rs.next()) {
                 project = new Project();
-                project.setId(rs.getInt("id"));
+                project.setIdProject(rs.getInt("id_project")); 
                 project.setName(rs.getString("name"));
                 project.setDescription(rs.getString("description"));
                 project.setStartDate(rs.getDate("start_date").toLocalDate());
@@ -56,11 +54,59 @@ public class ProjectDAO {
             System.err.println("Erro ao buscar o projeto: " + e.getMessage());
             e.printStackTrace();
         }
+        return project;
     }
-    public List<Project> list() { /* ... código SQL para SELECT ALL ... */ return new ArrayList<>(); }
-    public void update(Project projeto) { /* ... código SQL para UPDATE ... */ }
+
+    public List<Project> list() {
+        String sql = "SELECT * FROM projects";
+        List<Project> projects = new ArrayList<>();
+        try (Connection conn = DatabaseConnector.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Project project = new Project();
+                project.setIdProject(rs.getInt("id_project"));
+                project.setName(rs.getString("name"));
+                project.setDescription(rs.getString("description"));
+                project.setStartDate(rs.getDate("start_date").toLocalDate());
+                project.setEndDate(rs.getDate("end_date").toLocalDate());
+                project.setStatus(rs.getString("status"));
+                project.setBudget(rs.getDouble("budget"));
+                projects.add(project);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao listar os projetos: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return projects;
+    }
+    
+    public void update(Project projeto) {
+        String sql = "UPDATE projects SET name = ?, description = ?, start_date = ?, end_date = ?, status = ?, budget = ? WHERE id_project = ?";
+
+        try (Connection conn = DatabaseConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, projeto.getName());
+            pstmt.setString(2, projeto.getDescription());
+            pstmt.setDate(3, java.sql.Date.valueOf(projeto.getStartDate()));
+            pstmt.setDate(4, java.sql.Date.valueOf(projeto.getEndDate()));
+            pstmt.setString(5, projeto.getStatus());
+            pstmt.setDouble(6, projeto.getBudget());
+            pstmt.setInt(7, projeto.getIdProject()); 
+
+            pstmt.executeUpdate();
+            System.out.println("Projeto atualizado com sucesso!");
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao atualizar o projeto: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public void delete(int id) {
-        String sql = "DELETE FROM projects WHERE id = ?";
+        String sql = "DELETE FROM projects WHERE id_project = ?"; 
 
         try (Connection conn = DatabaseConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
