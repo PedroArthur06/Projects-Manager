@@ -16,4 +16,5 @@ public class Task {
   private String status;
   private int priority;
   private Project project;
+  private int idMember;
 }
