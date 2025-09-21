@@ -9,25 +9,32 @@ import br.com.pedroart.projectsmanager.exception.DataAccessException;
 
 public class MemberDAO {
 
-    public void create(Member member) {
+    public int create(Member member) {
       String sql = "INSERT INTO members (name, email, position, department, date_joined) VALUES (?, ?, ?, ?, ?)";
-
-        try (Connection conn = DatabaseConnector.getConnection();
-          PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      int generatedId = 0;
+      try (Connection conn = DatabaseConnector.getConnection();
+          PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
           pstmt.setString(1, member.getName());
           pstmt.setString(2, member.getEmail());
           pstmt.setString(3, member.getPosition());
           pstmt.setString(4, member.getDepartment());
-          pstmt.setDate(5, java.sql.Date.valueOf(member.getDateJoined())); 
+          pstmt.setDate(5, java.sql.Date.valueOf(member.getDateJoined()));
 
-          pstmt.executeUpdate();
+          int affectedRows = pstmt.executeUpdate();
+          if (affectedRows > 0) {
+              try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                  if (rs.next()) {
+                      generatedId = rs.getInt(1);
+                  }
+              }
+          }
           System.out.println("Membro salvo com sucesso!");
+          return generatedId;
 
-        }catch (SQLException e) {
+      } catch (SQLException e) {
           throw new DataAccessException("Erro ao salvar o membro: " + e.getMessage());
-          
-        }
+      }
     }
 
     public Member findById(int id) {
