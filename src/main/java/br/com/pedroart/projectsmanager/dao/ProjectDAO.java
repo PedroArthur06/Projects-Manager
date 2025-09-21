@@ -36,7 +36,7 @@ public class ProjectDAO {
             return generatedId;
     
         } catch (SQLException e) {
-            throw new DataAccessException("Erro ao salvar o projeto: " + e.getMessage());
+            throw new DataAccessException("erro saved project: " + e.getMessage());
         }
     }
     
