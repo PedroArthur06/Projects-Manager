@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class UIFactory {
 
-    // Cores e fontes
+    // Cores e Fontes
     public static final Color PRIMARY_COLOR = new Color(41, 128, 185);
     public static final Color SECONDARY_COLOR = new Color(52, 73, 94);
     public static final Color ACCENT_COLOR = new Color(26, 188, 156);
@@ -20,7 +20,8 @@ public class UIFactory {
     public static final Font MAIN_FONT = new Font("Segoe UI", Font.PLAIN, 12);
     public static final Font BOLD_FONT = new Font("Segoe UI", Font.BOLD, 12);
 
-    // Botão padrão estilizado
+    
+     //Cria um botão estilizado padrão para a aplicação.
     public static JButton createStyledButton(String text, Color color) {
         JButton button = new JButton(text);
         button.setFont(BOLD_FONT);
@@ -40,15 +41,15 @@ public class UIFactory {
         return button;
     }
 
-    // Estilo padrão das tabelas
+    
+     //Configura o estilo padrão para as tabelas.
     public static void configureTableStyle(JTable table) {
         table.setFont(MAIN_FONT);
         table.setRowHeight(28);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.getTableHeader().setFont(BOLD_FONT);
         table.getTableHeader().setBackground(SECONDARY_COLOR);
-        table.getTableHeader().setForeground(Color.WHITE);
-        table.getParent().setBackground(CARD_COLOR); 
+        table.getTableHeader().setForeground(Color.WHITE); 
     }
 
     public static DefaultTableModel createNonEditableTableModel(String[] columns) {
@@ -59,8 +60,7 @@ public class UIFactory {
             }
         };
     }
-
-    // Campo do formulário
+    
     public static void addFormField(JPanel panel, GridBagConstraints gbc, String label, JComponent field, int row) {
         gbc.gridx = 0;
         gbc.gridy = row;

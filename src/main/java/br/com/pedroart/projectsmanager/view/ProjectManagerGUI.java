@@ -59,7 +59,6 @@ public class ProjectManagerGUI extends JFrame {
         add(createFooterPanel(), BorderLayout.SOUTH);
     }
     
-    // Painéis principais
     private JTabbedPane createMainTabbedPane() {
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         tabbedPane.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -83,7 +82,10 @@ public class ProjectManagerGUI extends JFrame {
         projectsTableModel = createNonEditableTableModel(new String[]{"ID", "Nome", "Status", "Início", "Fim", "Orçamento"});
         projectsTable = new JTable(projectsTableModel);
         configureTableStyle(projectsTable);
-        panel.add(new JScrollPane(projectsTable), BorderLayout.CENTER);
+        
+        JScrollPane scrollPane = new JScrollPane(projectsTable);
+        scrollPane.getViewport().setBackground(CARD_COLOR);
+        panel.add(scrollPane, BorderLayout.CENTER);
 
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         buttonsPanel.setOpaque(false);
@@ -132,7 +134,10 @@ public class ProjectManagerGUI extends JFrame {
         membersTableModel = createNonEditableTableModel(new String[]{"ID", "Nome", "Cargo", "Email", "Depto"});
         membersTable = new JTable(membersTableModel);
         configureTableStyle(membersTable);
-        membersPanel.add(new JScrollPane(membersTable), BorderLayout.CENTER);
+        
+        JScrollPane scrollPane = new JScrollPane(membersTable);
+        scrollPane.getViewport().setBackground(CARD_COLOR);
+        membersPanel.add(scrollPane, BorderLayout.CENTER);
 
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         buttonsPanel.setOpaque(false);
@@ -157,7 +162,11 @@ public class ProjectManagerGUI extends JFrame {
         tasksTableModel = createNonEditableTableModel(new String[]{"ID", "Título", "Status", "Responsável"});
         tasksTable = new JTable(tasksTableModel);
         configureTableStyle(tasksTable);
-        tasksPanel.add(new JScrollPane(tasksTable), BorderLayout.CENTER);
+
+        // CORREÇÃO: Estilizar o JScrollPane depois de criar a tabela
+        JScrollPane scrollPane = new JScrollPane(tasksTable);
+        scrollPane.getViewport().setBackground(CARD_COLOR);
+        tasksPanel.add(scrollPane, BorderLayout.CENTER);
 
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         buttonsPanel.setOpaque(false);
