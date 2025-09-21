@@ -10,7 +10,7 @@ import br.com.pedroart.projectsmanager.exception.DataAccessException;
 public class TaskDAO {
 
     public void save(Task task) {
-        String sql = "INSERT INTO tasks (title, description, start_date, end_date, priority, status, id_project) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO tasks (title, description, start_date, end_date, priority, status, id_project, id_member) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -22,6 +22,7 @@ public class TaskDAO {
             pstmt.setInt(5, task.getPriority());
             pstmt.setString(6, task.getStatus());
             pstmt.setInt(7, task.getIdProject());
+            pstmt.setInt(8, task.getIdMember());
 
             pstmt.executeUpdate();
             System.out.println("Task saved successfully!");
@@ -51,6 +52,7 @@ public class TaskDAO {
                 task.setPriority(rs.getInt("priority"));
                 task.setStatus(rs.getString("status"));
                 task.setIdProject(rs.getInt("id_project"));
+                task.setIdMember(rs.getInt("id_member"));
             }
 
         } catch (SQLException e) {
@@ -77,6 +79,7 @@ public class TaskDAO {
                 task.setPriority(rs.getInt("priority"));
                 task.setStatus(rs.getString("status"));
                 task.setIdProject(rs.getInt("id_project"));
+                task.setIdMember(rs.getInt("id_member"));
                 tasks.add(task);
             }
         } catch (SQLException e) {
@@ -86,7 +89,7 @@ public class TaskDAO {
     }
 
     public void update(Task task) {
-        String sql = "UPDATE tasks SET title = ?, description = ?, start_date = ?, end_date = ?, priority = ?, status = ?, id_project = ? WHERE id_task = ?";
+        String sql = "UPDATE tasks SET title = ?, description = ?, start_date = ?, end_date = ?, priority = ?, status = ?, id_project = ?, id_member = ? WHERE id_task = ?";
 
         try (Connection conn = DatabaseConnector.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -99,6 +102,7 @@ public class TaskDAO {
             pstmt.setString(6, task.getStatus());
             pstmt.setInt(7, task.getIdProject());
             pstmt.setInt(8, task.getIdTask());
+            pstmt.setInt(8, task.getIdMember());
 
             pstmt.executeUpdate();
             System.out.println("Task updated successfully!");
