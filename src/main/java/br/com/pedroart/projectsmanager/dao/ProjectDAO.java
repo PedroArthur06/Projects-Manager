@@ -9,22 +9,32 @@ import br.com.pedroart.projectsmanager.exception.DataAccessException;
 
 public class ProjectDAO {
 
-    public void create(Project projeto) {
+    public int create(Project projeto) {
         String sql = "INSERT INTO projects (name, description, start_date, end_date, status, budget) VALUES (?, ?, ?, ?, ?, ?)";
-
+        int generatedId = 0;
+    
         try (Connection conn = DatabaseConnector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+    
             pstmt.setString(1, projeto.getName());
             pstmt.setString(2, projeto.getDescription());
             pstmt.setDate(3, java.sql.Date.valueOf(projeto.getStartDate()));
             pstmt.setDate(4, java.sql.Date.valueOf(projeto.getEndDate()));
             pstmt.setString(5, projeto.getStatus());
             pstmt.setDouble(6, projeto.getBudget());
-
-            pstmt.executeUpdate();
+    
+            int affectedRows = pstmt.executeUpdate();
+    
+            if (affectedRows > 0) {
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        generatedId = rs.getInt(1);
+                    }
+                }
+            }
             System.out.println("Projeto salvo com sucesso no banco de dados!");
-
+            return generatedId;
+    
         } catch (SQLException e) {
             throw new DataAccessException("Erro ao salvar o projeto: " + e.getMessage());
         }
