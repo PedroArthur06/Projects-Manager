@@ -1,4 +1,4 @@
-# 📋 Gerenciador de Projetos (Projects Manager)
+# 📋 Gerenciador de Projetos
 
 ## ℹ️ Sobre o Projeto
 
