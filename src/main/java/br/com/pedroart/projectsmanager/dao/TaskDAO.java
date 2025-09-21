@@ -156,4 +156,34 @@ public class TaskDAO {
         }
         return tasks;
     }
+
+    public List<Task> findTasksByProjectId(int projectId) {
+        String sql = "SELECT * FROM tasks WHERE id_project = ?";
+        List<Task> tasks = new ArrayList<>();
+    
+        try (Connection conn = DatabaseConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    
+            pstmt.setInt(1, projectId);
+            ResultSet rs = pstmt.executeQuery();
+    
+            while (rs.next()) {
+                Task task = new Task();
+                task.setIdTask(rs.getInt("id_task"));
+                task.setTitle(rs.getString("title"));
+                task.setDescription(rs.getString("description"));
+                task.setStartDate(rs.getDate("start_date").toLocalDate());
+                task.setEndDate(rs.getDate("end_date").toLocalDate());
+                task.setPriority(rs.getInt("priority"));
+                task.setStatus(rs.getString("status"));
+                task.setIdProject(rs.getInt("id_project"));
+                task.setIdMember(rs.getInt("id_member"));
+                tasks.add(task);
+            }
+    
+        } catch (SQLException e) {
+            throw new DataAccessException("Erro ao buscar tarefas por projeto: " + e.getMessage());
+        }
+        return tasks;
+    }
 }
