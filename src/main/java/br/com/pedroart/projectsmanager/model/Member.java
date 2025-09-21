@@ -15,4 +15,9 @@ public class Member {
   private String department;
   private LocalDate dateJoined;
   private List<Project> projects;
+
+  @Override
+  public String toString() {
+      return this.name;
+  }
 }
